@@ -133,13 +133,9 @@ utils_open_file( const char *filename, int autoload,
 
   case LIBSPECTRUM_CLASS_DISK_TRDOS:
 
-    if( !( machine_current->capabilities &
-	   LIBSPECTRUM_MACHINE_CAPABILITY_TRDOS_DISK ) &&
-        !periph_is_active( PERIPH_TYPE_BETA128 ) ) {
-      error = machine_select( LIBSPECTRUM_MACHINE_PENT ); if( error ) break;
-    }
-
-    error = beta_disk_insert( BETA_DRIVE_A, filename, autoload );
+    error = machine_select( LIBSPECTRUM_MACHINE_PENT512 ); if( error ) break;
+    error = beta_disk_insert( BETA_DRIVE_A, filename, autoload ); if( error ) break;
+    error = machine_reset( 1 );
     break;
 
   case LIBSPECTRUM_CLASS_DISK_GENERIC:
